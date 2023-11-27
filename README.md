@@ -10,5 +10,6 @@ Darba plans 02.10-30.10
 
 Darba plans 13.11-17.12
 
-![image](https://github.com/draculauraaa/python.project/assets/144676983/dd34b308-c5ed-4116-878e-7afcfdf23bf8)
+	
+![image](https://github.com/draculauraaa/python.project/assets/144676983/36f789b1-e238-4ce2-89ca-a449c7dbc0d9)
 
