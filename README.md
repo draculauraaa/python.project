@@ -4,12 +4,4 @@ Lietotne mērvienību konvertēšanai, lai atvieglotu aprēķinus. Lietotājam b
 
 Grupas sastāvs: Valerija
 
-Darba plans 02.10-30.10
-
-![img.png](img.png)
-
-Darba plans 13.11-17.12
-
-	
-![image](https://github.com/draculauraaa/python.project/assets/144676983/36f789b1-e238-4ce2-89ca-a449c7dbc0d9)
-
+![image](https://github.com/draculauraaa/python.project/assets/144676983/0491f1e2-f5e0-4acd-9ab1-ee4afefb38a8)
