@@ -1,0 +1,219 @@
+import tkinter as tk
+import tkinter.font as font
+from tkinter import messagebox
+from tkinter import ttk
+from tkinter import StringVar
+
+window = tk.Tk()
+window.geometry('500x600')
+window.title('Unit Converter')
+window.configure(bg='pink')
+
+font1 = font.Font(family='verdana', size='30', weight='bold')
+font2 = font.Font(family='verdana', size='15')
+font3 = font.Font(family='verdana', size='20')
+
+number_from = StringVar()
+
+
+def selected(event):
+    unit = event.widget.get()
+    if unit == 'Volume':
+        fromdd['values'] = ('cubic metere',
+                            'cubic centimetere',
+                            'cubic millimetere',
+                            'cubic kilometere',
+                            'cubic decimetere',
+                            'millilitere',
+                            'liter',
+                            'cubic foot',
+                            'gallon'
+                            )
+        todd['values'] = ('cubic metere',
+                          'cubic centimetere',
+                          'cubic millimetere',
+                          'cubic kilometere',
+                          'cubic decimetere',
+                          'milliliter',
+                          'liter',
+                          'cubic foot',
+                          'gallon'
+                          )
+    elif unit == 'Length':
+        fromdd['values'] = ('metere',
+                            'centimetere',
+                            'millimetere',
+                            'kilometere',
+                            'decimetere',
+                            'micrometere',
+                            'inch',
+                            'foot',
+                            'mile',
+                            'yard'
+                            )
+        todd['values'] = ('metere',
+                          'centimetere',
+                          'millimetere',
+                          'kilometere',
+                          'decimetere',
+                          'micrometere',
+                          'inch',
+                          'foot',
+                          'mile',
+                          'yard'
+                          )
+    elif unit == 'Area':
+        fromdd['values'] = ('square metere',
+                            'square centimetere',
+                            'square millimetere',
+                            'square kilometere',
+                            'square decimetere',
+                            'square micrometere',
+                            'square inch',
+                            'square foot',
+                            'square mile',
+                            'square yard',
+                            'hectare',
+                            'are'
+                            )
+        todd['values'] = ('square metere',
+                          'square centimetere',
+                          'square millimetere',
+                          'square kilometere',
+                          'square decimetere',
+                          'square micrometere',
+                          'square inch',
+                          'square foot',
+                          'square mile',
+                          'square yard',
+                          'hectare',
+                          'are'
+                          )
+    elif unit == 'Mass':
+        fromdd['values'] = ('tonne',
+                            'kilogram',
+                            'gram',
+                            'milligram',
+                            'microgram',
+                            'kilotonne',
+                            'pound'
+                            )
+        todd['values'] = ('tonne',
+                          'kilogram',
+                          'gram',
+                          'milligram',
+                          'microgram',
+                          'kilotonne',
+                          'pound'
+                          )
+
+
+def fromfunc(event):
+    global result_from
+    result_from = event.widget.get()
+
+
+def tofunc(event):
+    global result_to
+    result_to = event.widget.get()
+
+
+def answer(n1, unit, result_from, result_to, result_label):
+    num1 = n1.get()
+    try:
+        number1 = float(num1)
+    except ValueError:
+        messagebox.showerror('Error', 'Invalid input. Please enter a valid number.')
+        return
+
+    length_factors = {'metere': 1, 'centimetere': 0.01, 'millimetere': 0.001, 'kilometere': 1000,
+                      'decimetere': 0.1, 'micrometere': 0.000001, 'inch': 25, 'foot': 0.3048, 'mile': 1600, 'yard': 2}
+    mass_factors = {'tonne': 1000, 'kilogram': 1, 'gram': 0.001, 'milligram': 0.000001, 'microgram': 0.000000001,
+                    'kilotonne': 1000000, 'pound': 0.454}
+    area_factors = {'square metere': 1, 'square centimetere': 0.0001, 'square millimetere': 0.000001, 'square kilometere': 1000000,
+                    'square decimetere': 0.01, 'square micrometere': 0.000000000001, 'square inch': 0.000645,'square foot': 0.0929,
+                    'square mile': 2589988.11,'square yard': 0.836, 'hectare': 10000,'are': 100}
+    volume_factors = {'cubic metere': 1, 'cubic centimetere': 0.000001,'cubic millimetere': 0.000000001,'cubic kilometere': 1000000000,
+                      'cubic decimetere': 0.001,'millilitere': 0.000001,'liter': 0.001, 'cubic foot': 0.0283,'gallon': 0.00379}
+
+    if unit == 'Length':
+        try:
+            calculate = number1 * length_factors[result_from] / length_factors[result_to]
+        except KeyError:
+            messagebox.showerror('Error', 'Invalid length unit selected')
+            return
+        result_label.configure(text=f' {round(calculate, 9)} {result_to}')
+    elif unit == 'Mass':
+        try:
+            calculate = number1 * mass_factors[result_from] / mass_factors[result_to]
+        except KeyError:
+            messagebox.showerror('Error', 'Invalid mass unit selected')
+            return
+        result_label.configure(text=f' {round(calculate, 9)} {result_to}')
+    elif unit == 'Area':
+        try:
+            calculate = number1 * area_factors[result_from] / area_factors[result_to]
+        except KeyError:
+            messagebox.showerror('Error', 'Invalid area unit selected')
+            return
+        result_label.configure(text=f' {round(calculate, 9)} {result_to}')
+    elif unit == 'Volume':
+        try:
+            calculate = number1 * volume_factors[result_from] / volume_factors[result_to]
+        except KeyError:
+            messagebox.showerror('Error', 'Invalid area unit selected')
+            return
+        result_label.configure(text=f' {round(calculate, 9)} {result_to}')
+
+
+
+
+main = tk.Label(window, text='Unit Converter', bg='pink')
+main['font'] = font1
+main.place(relx='0.5', rely='0.1', anchor='center')
+
+unit = tk.Label(window, text='Unit:', bg='pink')
+unit['font'] = font2
+unit.place(relx='0.2', rely='0.305', anchor='center')
+
+n = StringVar()
+unitdd = ttk.Combobox(window, width='35', textvariable=n)
+
+unitdd['values'] = ('Length', 'Area', 'Volume', 'Mass')
+unitdd.place(relx='0.5', rely='0.31', anchor='center')
+unitdd.current()
+unitdd.bind('<<ComboboxSelected>>', selected)
+
+label_from = tk.Label(window, text='From:', bg='pink')
+label_from['font'] = font2
+label_from.place(relx='0.2', rely='0.395', anchor='center')
+
+f = StringVar()
+fromdd = ttk.Combobox(window, width='35', textvariable=f)
+fromdd.place(relx='0.5', rely='0.4', anchor='center')
+fromdd.current()
+fromdd.bind('<<ComboboxSelected>>', fromfunc)
+
+num_from = tk.Entry(window, width=10, textvariable=number_from)
+num_from.place(relx='0.5', rely='0.55', anchor='center')
+
+to = tk.Label(window, text='To:', bg='pink')
+to['font'] = font2
+to.place(relx='0.2', rely='0.475', anchor='center')
+
+t = StringVar()
+todd = ttk.Combobox(window, width='35', textvariable=t)
+todd.place(relx='0.5', rely='0.48', anchor='center')
+todd.current()
+todd.bind('<<ComboboxSelected>>', tofunc)
+
+result = tk.Label(window, text='', bg='white', width=20)
+result['font'] = font3
+result.place(relx='0.5', rely='0.65', anchor='center')
+
+get_answer = tk.Button(window, text='Generate Answer', bg='red', fg='white',
+                       command=lambda: answer(num_from, n.get(), f.get(), t.get(), result))
+get_answer['font'] = font2
+get_answer.place(relx='0.5', rely='0.8', anchor='center')
+
+window.mainloop()
