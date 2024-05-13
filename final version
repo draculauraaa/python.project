@@ -1,0 +1,257 @@
+import tkinter as tk
+import tkinter.font as font
+from tkinter import messagebox
+from tkinter import ttk
+from tkinter import StringVar
+
+window = tk.Tk()
+window.geometry('500x600')
+window.title('Unit Converter')
+window.configure(bg='pink')
+
+font1 = font.Font(family='verdana', size='30', weight='bold')
+font2 = font.Font(family='verdana', size='15')
+font3 = font.Font(family='verdana', size='20')
+
+number_from = StringVar()
+
+
+def selected(event):
+    unit = event.widget.get()
+    if unit == 'Volume':
+        fromdd['values'] = ('cubic m',
+                            'cubic cm',
+                            'cubic mm',
+                            'cubic km',
+                            'cubic dm',
+                            'ml',
+                            'l',
+                            'cubic foot',
+                            'gallon'
+                            )
+        todd['values'] = ('cubic m',
+                          'cubic cm',
+                          'cubic mm',
+                          'cubic km',
+                          'cubic dm',
+                          'ml',
+                          'l',
+                          'cubic foot',
+                          'gallon'
+                          )
+    elif unit == 'Length':
+        fromdd['values'] = ('m',
+                            'cm',
+                            'mm',
+                            'km',
+                            'dm',
+                            'microm',
+                            'inch',
+                            'foot',
+                            'mile',
+                            'yard'
+                            )
+        todd['values'] = ('m',
+                          'cm',
+                          'mm',
+                          'km',
+                          'dm',
+                          'microm',
+                          'inch',
+                          'foot',
+                          'mile',
+                          'yard'
+                          )
+    elif unit == 'Area':
+        fromdd['values'] = ('square m',
+                            'square cm',
+                            'square mm',
+                            'square km',
+                            'square dm',
+                            'square microm',
+                            'square inch',
+                            'square foot',
+                            'square mile',
+                            'square yard',
+                            'hectare',
+                            'are'
+                            )
+        todd['values'] = ('square m',
+                          'square cm',
+                          'square mm',
+                          'square km',
+                          'square dm',
+                          'square microm',
+                          'square inch',
+                          'square foot',
+                          'square mile',
+                          'square yard',
+                          'hectare',
+                          'are'
+                          )
+    elif unit == 'Mass':
+        fromdd['values'] = ('t',
+                            'kg',
+                            'g',
+                            'mg',
+                            'microg',
+                            'kt',
+                            'pound'
+                            )
+        todd['values'] = ('t',
+                          'kg',
+                          'g',
+                          'mg',
+                          'microg',
+                          'kt',
+                          'pound'
+                          )
+    elif unit == 'Density':
+        fromdd['values'] = ('g/ml',
+                            'g/cm3',
+                            'g/l',
+                            'kg/l',
+                            'kg/m3'
+                            )
+        todd['values'] = ('g/ml',
+                            'g/cm3',
+                            'g/l',
+                            'kg/l',
+                            'kg/m3'
+                          )
+    elif unit == 'Velocity':
+        fromdd['values'] = ('m/s',
+                            'km/h',
+                            'mph',
+                            'ft/s'
+                            )
+        todd['values'] = ('m/s',
+                            'km/h',
+                            'mph',
+                            'ft/s'
+                          )
+
+def fromfunc(event):
+    global result_from
+    result_from = event.widget.get()
+
+
+def tofunc(event):
+    global result_to
+    result_to = event.widget.get()
+
+
+def answer(n1, unit, result_from, result_to, result_label):
+    num1 = n1.get()
+    try:
+        number1 = float(num1)
+    except ValueError:
+        messagebox.showerror('Error', 'Invalid input. Please enter a valid number.')
+        return
+
+    length_factors = {'m': 1, 'cm': 0.01, 'mm': 0.001, 'km': 1000,
+                      'dm': 0.1, 'microm': 0.000001, 'inch': 25, 'foot': 0.3048, 'mile': 1600, 'yard': 2}
+    mass_factors = {'t': 1000, 'kg': 1, 'g': 0.001, 'mg': 0.000001, 'microg': 0.000000001,
+                    'kt': 1000000, 'pound': 0.454}
+    area_factors = {'square m': 1, 'square cm': 0.0001, 'square mm': 0.000001, 'square km': 1000000,
+                    'square dm': 0.01, 'square microm': 0.000000000001, 'square inch': 0.000645,'square foot': 0.0929,
+                    'square mile': 2589988.11,'square yard': 0.836, 'hectare': 10000,'are': 100}
+    volume_factors = {'cubic m': 1, 'cubic cm': 0.000001,'cubic mm': 0.000000001,'cubic km': 1000000000,
+                      'cubic dm': 0.001,'ml': 0.000001,'l': 0.001, 'cubic foot': 0.0283,'gallon': 0.00379}
+    density_factors = {'g/ml': 1, 'g/cm3': 1, 'g/l': 0.001,'kg/l': 1, 'kg/m3': 0.001}
+    velocity_factors = {'m/s': 3.6, 'km/h': 1, 'mph': 0.621371, 'ft/s': 1.09728}
+
+    if unit == 'Length':
+        try:
+            calculate = number1 * length_factors[result_from] / length_factors[result_to]
+        except KeyError:
+            messagebox.showerror('Error', 'Invalid length unit selected')
+            return
+        result_label.configure(text=f' {round(calculate, 9)} {result_to}')
+    elif unit == 'Mass':
+        try:
+            calculate = number1 * mass_factors[result_from] / mass_factors[result_to]
+        except KeyError:
+            messagebox.showerror('Error', 'Invalid mass unit selected')
+            return
+        result_label.configure(text=f' {round(calculate, 9)} {result_to}')
+    elif unit == 'Area':
+        try:
+            calculate = number1 * area_factors[result_from] / area_factors[result_to]
+        except KeyError:
+            messagebox.showerror('Error', 'Invalid area unit selected')
+            return
+        result_label.configure(text=f' {round(calculate, 9)} {result_to}')
+    elif unit == 'Volume':
+        try:
+            calculate = number1 * volume_factors[result_from] / volume_factors[result_to]
+        except KeyError:
+            messagebox.showerror('Error', 'Invalid area unit selected')
+            return
+        result_label.configure(text=f' {round(calculate, 9)} {result_to}')
+    elif unit == 'Density':
+        try:
+            calculate = number1 * density_factors[result_from] / density_factors[result_to]
+        except KeyError:
+            messagebox.showerror('Error', 'Invalid area unit selected')
+            return
+        result_label.configure(text=f' {round(calculate, 9)} {result_to}')
+    elif unit == 'Velocity':  # Fixed indentation here
+        try:  # Added try block
+            calculate = number1 * velocity_factors[result_from] / velocity_factors[result_to]
+        except KeyError:
+            messagebox.showerror('Error', 'Invalid velocity unit selected')
+            return
+        result_label.configure(text=f' {round(calculate, 9)} {result_to}')
+
+
+
+main = tk.Label(window, text='Unit Converter', bg='pink')
+main['font'] = font1
+main.place(relx='0.5', rely='0.1', anchor='center')
+
+unit = tk.Label(window, text='Unit:', bg='pink')
+unit['font'] = font2
+unit.place(relx='0.2', rely='0.305', anchor='center')
+
+n = StringVar()
+unitdd = ttk.Combobox(window, width='35', textvariable=n)
+
+unitdd['values'] = ('Length', 'Area', 'Volume', 'Mass', 'Density', 'Velocity')
+unitdd.place(relx='0.5', rely='0.31', anchor='center')
+unitdd.current()
+unitdd.bind('<<ComboboxSelected>>', selected)
+
+label_from = tk.Label(window, text='From:', bg='pink')
+label_from['font'] = font2
+label_from.place(relx='0.2', rely='0.395', anchor='center')
+
+f = StringVar()
+fromdd = ttk.Combobox(window, width='35', textvariable=f)
+fromdd.place(relx='0.5', rely='0.4', anchor='center')
+fromdd.current()
+fromdd.bind('<<ComboboxSelected>>', fromfunc)
+
+num_from = tk.Entry(window, width=10, textvariable=number_from)
+num_from.place(relx='0.5', rely='0.55', anchor='center')
+
+to = tk.Label(window, text='To:', bg='pink')
+to['font'] = font2
+to.place(relx='0.2', rely='0.475', anchor='center')
+
+t = StringVar()
+todd = ttk.Combobox(window, width='35', textvariable=t)
+todd.place(relx='0.5', rely='0.48', anchor='center')
+todd.current()
+todd.bind('<<ComboboxSelected>>', tofunc)
+
+result = tk.Label(window, text='', bg='white', width=25)
+result['font'] = font3
+result.place(relx='0.5', rely='0.65', anchor='center')
+
+get_answer = tk.Button(window, text='Generate Answer', bg='red', fg='white',
+                       command=lambda: answer(num_from, n.get(), f.get(), t.get(), result))
+get_answer['font'] = font2
+get_answer.place(relx='0.5', rely='0.8', anchor='center')
+
+window.mainloop()
