@@ -4,4 +4,8 @@ Lietotne mērvienību konvertēšanai, lai atvieglotu aprēķinus. Lietotājam b
 
 Grupas sastāvs: Valerija
 
-![image](https://github.com/draculauraaa/python.project/assets/144676983/0491f1e2-f5e0-4acd-9ab1-ee4afefb38a8)
+Kā palaist: 
+Jāinstale Python, ja vēl nav instalēts datorā.
+Nokopēt kodu teksta failā un saglabāt to ar paplašinājumu .py
+Var palaist terminalā vai command promtā
+Nav jāinstalē citas bibliotēkas, jo kods balstās tikai uz Python iebūvētajiem standartbibliotēkam, Tkinker bibliotēkai jābut instalētai by default.
